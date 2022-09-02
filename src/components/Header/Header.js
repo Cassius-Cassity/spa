@@ -4,7 +4,7 @@ import "./Header.css";
 const Header = () => {
   return (
     <div>
-        <span className="header">Webflix Entertainment</span>
+        <span onClick={() => window.scroll(0, 0)}className="header">Webflix Entertainment</span>
     </div>
   )
 };
