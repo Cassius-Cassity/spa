@@ -3,6 +3,7 @@ import axios from 'axios';
 import CustomPagination from '../../components/Pagination/Pagination';
 import Content from '../../components/Contents/Content';
 import Genres from '../../components/Genres';
+import useGenres from '../../hooks/useGenre';
 
 const Movies = () => {
     const [page, setPage] = useState(1);
@@ -10,9 +11,10 @@ const Movies = () => {
     const [numOfPages, setNumOfPages] = useState();
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [genres, setGenres] = useState([]);
+    const genreforURL=useGenres(selectedGenres)
 
     const fetchMovies = () => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`)
         .then((res) => {
             setContent(res.data.results);
             setNumOfPages(res.data.total_pages);
@@ -24,7 +26,7 @@ const Movies = () => {
 
     useEffect(() => {
       fetchMovies();
-    }, [page]);
+    }, [page, genreforURL]);
     
 
   return (
